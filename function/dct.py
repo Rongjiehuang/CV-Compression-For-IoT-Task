@@ -30,9 +30,9 @@ def mydct(img):
     dstg = np.zeros(imgg_idct.shape, dtype=np.float32)
     dstr = np.zeros(imgr_idct.shape, dtype=np.float32)
 
-    cv2.normalize(imgb_idct, dst=dstb, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX)
-    cv2.normalize(imgg_idct, dst=dstg, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX)
-    cv2.normalize(imgr_idct, dst=dstr, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX)
+    # cv2.normalize(imgb_idct, dst=dstb, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX)
+    # cv2.normalize(imgg_idct, dst=dstg, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX)
+    # cv2.normalize(imgr_idct, dst=dstr, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX)
 
     source = cv2.merge([r, g, b])
     result_dct = cv2.merge([imgr_dct, imgg_dct, imgb_dct])
