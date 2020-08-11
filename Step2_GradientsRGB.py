@@ -46,7 +46,7 @@ if __name__ == '__main__':
     plt.title("Target:Resnet50")
 
     plt.legend()
-    plt.savefig('Pic/Figure6_ColorSensitivity.jpg')
+    # plt.savefig('Pic/Figure6_ColorSensitivity.jpg')
     plt.show()
 
 
