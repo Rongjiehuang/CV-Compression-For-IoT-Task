@@ -1,0 +1,4 @@
+source：mIoU 67.95
+jpeg100：mIoU
+jpeg95：mIoU
+jpeg80：mIoU
