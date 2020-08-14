@@ -1,0 +1,1 @@
+source * Prec@1 75.138 Prec@5 92.452
