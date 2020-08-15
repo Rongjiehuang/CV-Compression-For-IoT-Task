@@ -43,6 +43,8 @@ gR = abs(tensors.grad[0,0,:,:])
 gG = abs(tensors.grad[0,1,:,:])
 gB = abs(tensors.grad[0,2,:,:])
 
+
+
 z1 = (gB / gG).flatten()
 z2 = (gR / gG).flatten()
 z1.sort()
@@ -53,3 +55,25 @@ z2median = z2[int(len(z2) / 2)]  # 取中位数
 WR = z2median / (1 + z1median + z2median)  # RGB2YUV权重
 WG = 1 / (1 + z1median + z2median)
 WB = z1median / (1 + z1median + z2median)
+
+WR=WR.item()
+WG=WG.item()
+WB=WB.item()
+
+plt.bar(x=1, height=WG, width=0.1, color='black', label="Y", bottom=0)
+plt.bar(x=1, height=WB, width=0.1, color='blue', label="U", bottom=WG)
+plt.bar(x=1, height=WR, width=0.1, color='red', label="V", bottom=WG + WB)
+
+plt.bar(x=1.5, height=0.587, width=0.1, color='black', bottom=0)
+plt.bar(x=1.5, height=0.299, width=0.1, color='blue', bottom=0.587)
+plt.bar(x=1.5, height=0.114, width=0.1, color='red', bottom=0.299 + 0.587)
+
+plt.xticks([1, 1.5], ["G-YUV", "YUV"])
+plt.ylim(0, 1)
+plt.ylabel("Sensitivity")
+plt.xlabel("")
+plt.title("Target:Resnet50")
+
+plt.legend()
+plt.savefig('Pic/Figure10.jpg')
+plt.show()

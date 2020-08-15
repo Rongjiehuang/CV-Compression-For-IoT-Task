@@ -7,7 +7,7 @@ from torchvision import transforms
 from torch.autograd import Variable
 
 
-def getweights(img):
+def getweights():
 
     seed = 1
     torch.manual_seed(seed)
@@ -48,4 +48,4 @@ def getweights(img):
     WG = 1 / (1 + z1median + z2median)
     WB = z1median / (1 + z1median + z2median)
 
-    return WR,WG,WB
+    return WR.item(),WG.item(),WB.item()
