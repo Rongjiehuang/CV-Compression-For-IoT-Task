@@ -3,4 +3,6 @@ frankfurt_000000_001236
 source：mIoU 67.95   size 2.28MB
 jpeg100：mIoU 67.26  size 1.12MB
 jpeg95：mIoU 66.81 size 466Kb
+GRACE：mIoU 66.79 size 203Kb
+
 jpeg80：mIoU 64.92  size 232Kb

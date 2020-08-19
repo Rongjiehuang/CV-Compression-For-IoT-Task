@@ -7,12 +7,12 @@ from torchvision import transforms
 from torch.autograd import Variable
 
 
-def getweights():
+def getweights(imgname):
 
     seed = 1
     torch.manual_seed(seed)
 
-    imgxSource = Image.open("Pic/CityScapes.png").convert('RGB')
+    imgxSource = Image.open(imgname).convert('RGB')
     imgx = imgxSource.resize((224, 224))
     tran = transforms.ToTensor()
 

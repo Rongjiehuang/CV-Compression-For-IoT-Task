@@ -1,1 +1,3 @@
-source * Prec@1 75.138 Prec@5 92.452
+source   Prec@1 75.138 Prec@5 92.452     SIZE 217KB
+Jpeg95  Prec@1 75.076 Prec@5 92.444    SIZE  135KB
+Jpeg85  Prec@1 74.986 Prec@5 92.370   SIZE 79KB

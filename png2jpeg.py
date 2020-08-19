@@ -1,4 +1,5 @@
 import os
+import cv2
 from PIL import Image
 
 DirList = [
@@ -14,9 +15,3 @@ for path in DirList:
             im = Image.open(fullName).convert("RGB")
             im.save(mainName + '.jpeg', quality=80)
             os.remove(fullName)
-
-file = open("sample.txt")
-for line in file:
-
-
-file.close()

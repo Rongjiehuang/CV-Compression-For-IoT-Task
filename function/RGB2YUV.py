@@ -1,53 +1,48 @@
 import cv2
 import numpy as np
 
-def RGB2YUV(WR,WG,WB,img):
-    (r, g, b) = cv2.split(img)
+def sourceRGB2YUV(img,WR=0.299,WG=0.587,WB=0.114): #R，G，B~[0,255]   U，V~[-128,128]
+    img = img / 255
+
+    #source:
+    #WR = 0.299
+    # WG = 0.587
+    # WB = 0.114
+
+    (b, g, r) = cv2.split(img)
+
     y = WR * r + WG * g + WB * b
-    u = 1/2 * (b-y) / (1-WB)
-    v = 1/2 * (r-y) / (1-WR)
+    u = 1/2 * (b-y) / (1-WB)  # Cb
+    v = 1/2 * (r-y) / (1-WR)  # Cr
 
-    # y = np.array(y).astype(np.int8)
-    # u = np.array(u).astype(np.int8)
-    # v = np.array(v).astype(np.int8)
-    imgYUV = cv2.merge([y, u, v])  # IDCT复原图像
-    # imgcvYUV = cv2.cvtColor(img,cv2.COLOR_RGB2YUV)
+    # 量化前  Y~ [0,1]     U,V~[-0.5,0.5]
+    # 量化后  Y~[16,235]   U ~[16,240]   V~[16,240]
+    y = y*(235-16) +16
+    u = u*224 +128
+    v = v*224 +128
 
+    y = y.astype(np.int)
+    u = u.astype(np.int)
+    v = v.astype(np.int)
+
+    imgYUV = cv2.merge([y,u,v])
     return imgYUV
 
-def sourceRGB2YUV(img):
-    WR = 0.299
-    WG = 0.587
-    WB = 0.114
-    (r, g, b) = cv2.split(img)
-    y = WR * r + WG * g + WB * b
-    u = 1/2 * (b-y) / (1-WB)
-    v = 1/2 * (r-y) / (1-WR)
+def sourceYUV2RGB(img,WR=0.299,WG=0.587,WB=0.114): #R，G，B~[0,255]   U，V~[-128,128]
+    # 量化前   Y~[16,235]   U ~[16,240]   V~[16,240]
+    # 量化后   Y~ [0,1]     U,V~[-0.5,0.5]
+    (v,u,y) = cv2.split(img)
+    y = 1/219 *y - 16/219
+    u = 1/224 *u - 0.5714
+    v = 1/224 *v - 0.5714
 
-    # y = np.array(y).astype(np.int8)
-    # u = np.array(u).astype(np.int8)
-    # v = np.array(v).astype(np.int8)
-    imgYUV = cv2.merge([y, u, v])  # IDCT复原图像
-    # imgcvYUV = cv2.cvtColor(img,cv2.COLOR_RGB2YUV)
+    # print("y:", y, "u:", u, "v:", v)
 
-    return imgYUV
-
-def sourceYUV2RGB(img):
-    WR = 0.299
-    WG = 0.587
-    WB = 0.114
-    (y, u, v) = cv2.split(img)
-    r = y + 1.44*v
-    g = y - 0.39*u - 0.58*v
-    b = y + 2.03*u
-
-    imgRGB = cv2.merge([r, g, b])  # IDCT复原图像
-    return imgRGB
-
-def YUV2RGB(WR,WG,WB,img):
-    (y, u, v) = cv2.split(img)
     b = y + 2*(1-WB)*u
     r = y + 2*(1-WR)*v
     g = (y - (WR*r + WB*b))/WG
-    imgRGB = cv2.merge([r, g, b])  # IDCT复原图像
+    # print("r:", r, "g:", g, "b:", b)
+    imgRGB = cv2.merge([r,g,b])
+    imgRGB = imgRGB*255
+    # imgRGB.astype(np.int)
     return imgRGB
